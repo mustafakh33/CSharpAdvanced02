@@ -1,10 +1,15 @@
-﻿namespace CSharpAdvanced02
+﻿using CSharpAdvanced02.Data;
+using CSharpAdvanced02.Models;
+
+namespace CSharpAdvanced02
 {
-    internal class Program
+    public class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            List<Product> catalog = ProductCatalog.GetProducts();
+
+            Console.WriteLine($"Total Products: {catalog.Count}");
         }
     }
 }
