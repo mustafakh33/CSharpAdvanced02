@@ -32,6 +32,21 @@ namespace CSharpAdvanced02
             }
         }
 
+        // Func<Product, string> receives a Product and returns a string representation of it.
+        static List<string> TransformProducts(List<Product> products, Func<Product, string> transform)
+        {
+            List<string> result = new List<string>();
+
+            foreach (Product product in products)
+            {
+                string transformedProduct = transform(product);
+
+                result.Add(transformedProduct);
+            }
+
+            return result;
+        }
+
         static void Main(string[] args)
         {
 
@@ -116,6 +131,37 @@ namespace CSharpAdvanced02
                     $"[{p.Category}] {p.Name} | Price: ${p.Price} | Stock: {p.Stock}"
                 );
             });
+
+
+            Console.WriteLine();
+
+            // Transform products into a summary list using Func<Product, string>
+            Console.WriteLine("\n--- Summary List ---");
+
+            List<string> summary = TransformProducts(
+                catalog,
+                p => $"{p.Name} (${p.Price})"
+            );
+
+            foreach (string item in summary)
+            {
+                Console.WriteLine(item);
+            }
+
+
+            // Transform products into price labels using Func<Product, string>
+            Console.WriteLine("\n--- Price Labels ---");
+
+            List<string> priceLabels = TransformProducts(
+                catalog,
+                p => p.Price > 100 ? "Expensive!" : "Affordable"
+            );
+
+            for (int i = 0; i < catalog.Count; i++)
+            {
+                Console.WriteLine($"{catalog[i].Name}: {priceLabels[i]}");
+            }
+
 
         }
     }
