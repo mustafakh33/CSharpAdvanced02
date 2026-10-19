@@ -47,6 +47,19 @@ namespace CSharpAdvanced02
             return result;
         }
 
+        // Predicate<Product> receives a Product and returns true or false to determine whether it matches.
+        static List<Product> FilterProducts(List<Product> products, Predicate<Product> condition)
+        {
+            List<Product> filteredProducts = new List<Product>();
+            foreach (Product product in products)
+            {
+                if (condition(product))
+                {
+                    filteredProducts.Add(product);
+                }
+            }
+            return filteredProducts;
+        }
         static void Main(string[] args)
         {
 
@@ -160,6 +173,28 @@ namespace CSharpAdvanced02
             for (int i = 0; i < catalog.Count; i++)
             {
                 Console.WriteLine($"{catalog[i].Name}: {priceLabels[i]}");
+            }
+
+
+
+            Console.WriteLine();
+
+
+            // Filter products using Predicate<Product>
+
+            Console.WriteLine("\n--- Low-Stock Alert ---");
+
+            // Predicate<Product> returns true when stock is below 20.
+            List<Product> lowStockProducts = FilterProducts(
+                catalog,
+                p => p.Stock < 20
+            );
+
+            foreach (Product product in lowStockProducts)
+            {
+                Console.WriteLine(
+                    $"[LOW STOCK] {product.Name}: only {product.Stock} left!"
+                );
             }
 
 
