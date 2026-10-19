@@ -22,6 +22,16 @@ namespace CSharpAdvanced02
 
             return result;
         }
+
+        // Action<Product> receives a Product and performs an action on it.
+        static void PrintReport(List<Product> products, Action<Product> printAction)
+        {
+            foreach (Product product in products)
+            {
+                printAction(product);
+            }
+        }
+
         static void Main(string[] args)
         {
 
@@ -86,6 +96,27 @@ namespace CSharpAdvanced02
                     $"{product.Name} - ${product.Price} (Stock: {product.Stock})"
                 );
             }
+
+            Console.WriteLine();
+
+            // Print a short report using Action<Product>
+            Console.WriteLine("--- Short Report ---");
+
+            PrintReport(catalog, p =>
+            {
+                Console.WriteLine($"{p.Name} - ${p.Price}");
+            });
+
+            // Print a detailed report using Action<Product>
+            Console.WriteLine("\n--- Detailed Report ---");
+
+            PrintReport(catalog, p =>
+            {
+                Console.WriteLine(
+                    $"[{p.Category}] {p.Name} | Price: ${p.Price} | Stock: {p.Stock}"
+                );
+            });
+
         }
     }
 }
